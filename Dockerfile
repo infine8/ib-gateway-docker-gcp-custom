@@ -6,13 +6,13 @@ LABEL maintainer="Dimitri Vasdekis <dvasdekis@gmail.com>"
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=America/Chicago
 ENV TWS_MAJOR_VRSN=978
-ENV IBC_VERSION=3.8.2
+ENV IBC_VERSION=3.12.0
 ENV IBC_INI=/root/IBController/IBController.ini
 ENV IBC_PATH=/opt/IBController
 ENV TWS_PATH=/root/Jts
 ENV TWS_CONFIG_PATH=/root/Jts
 ENV LOG_PATH=/opt/IBController/Logs
-ENV JAVA_PATH=/opt/i4j_jres/1.8.0_152-tzdata2019c/bin
+ENV JAVA_PATH=/opt/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202/bin
 ENV APP=GATEWAY
 
 # Install needed packages
@@ -21,19 +21,19 @@ RUN apt-get -qq update -y && apt-get -qq install -y unzip xvfb libxtst6 libxrend
 # Setup IB TWS
 RUN mkdir -p /opt/TWS
 WORKDIR /opt/TWS
-COPY ./ibgateway-stable-standalone-linux-9782c-x64.sh /opt/TWS/ibgateway-stable-standalone-linux-x64.sh
+COPY ./ibgateway-stable-standalone-linux-x64.sh /opt/TWS/ibgateway-stable-standalone-linux-x64.sh
 RUN chmod a+x /opt/TWS/ibgateway-stable-standalone-linux-x64.sh
 
 # Install IBController
 RUN mkdir -p /opt/IBController/ && mkdir -p /opt/IBController/Logs
 WORKDIR /opt/IBController/
-COPY ./IBCLinux-3.8.2/  /opt/IBController/
+COPY ./IBCLinux-3.12.0/  /opt/IBController/
 RUN chmod -R u+x *.sh && chmod -R u+x scripts/*.sh
 
 WORKDIR /
 
 # Install TWS
-RUN yes n | /opt/TWS/ibgateway-stable-standalone-linux-x64.sh
+RUN  yes "$(echo '/root/Jts/ibgateway/978' && echo 'n')" | /opt/TWS/ibgateway-stable-standalone-linux-x64.sh
 RUN rm /opt/TWS/ibgateway-stable-standalone-linux-x64.sh
 
 # Must be set after install of IBGateway
@@ -56,3 +56,5 @@ COPY ./restart-docker-vm.py /root/restart-docker-vm.py
 COPY ./supervisord.conf /root/supervisord.conf
 
 CMD /usr/bin/supervisord -c /root/supervisord.conf
+
+#CMD ["/bin/bash"]
