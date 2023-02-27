@@ -21,7 +21,8 @@ RUN apt-get -qq update -y && apt-get -qq install -y unzip xvfb libxtst6 libxrend
 # Setup IB TWS
 RUN mkdir -p /opt/TWS
 WORKDIR /opt/TWS
-COPY ./ibgateway-stable-standalone-linux-x64.sh /opt/TWS/ibgateway-stable-standalone-linux-x64.sh
+RUN wget https://download2.interactivebrokers.com/installers/ibgateway/stable-standalone/ibgateway-stable-standalone-linux-x64.sh
+#COPY ./ibgateway-stable-standalone-linux-x64.sh /opt/TWS/ibgateway-stable-standalone-linux-x64.sh
 RUN chmod a+x /opt/TWS/ibgateway-stable-standalone-linux-x64.sh
 
 # Install IBController
