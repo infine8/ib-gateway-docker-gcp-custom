@@ -16,7 +16,7 @@ ENV JAVA_PATH=/opt/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202/bin
 ENV APP=GATEWAY
 
 # Install needed packages
-RUN apt-get -qq update -y && apt-get -qq install -y unzip xvfb libxtst6 libxrender1 libxi6 socat software-properties-common curl supervisor x11vnc tmpreaper python3-pip
+RUN apt-get -qq update -y && apt-get -qq install -y wget unzip xvfb libxtst6 libxrender1 libxi6 socat software-properties-common curl supervisor x11vnc tmpreaper python3-pip
 
 # Setup IB TWS
 RUN mkdir -p /opt/TWS
