@@ -1,13 +1,11 @@
 FROM ubuntu:20.04
 
-LABEL maintainer="Dimitri Vasdekis <dvasdekis@gmail.com>"
-
 # Set Env vars
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=America/Chicago
 ENV TWS_MAJOR_VRSN=978
-ENV IBC_VERSION=3.12.0
-ENV IBC_INI=/root/IBController/IBController.ini
+ENV IBC_VERSION=3.16.2
+ENV IBC_INI=/opt/IBController/IBController.ini
 ENV IBC_PATH=/opt/IBController
 ENV TWS_PATH=/root/Jts
 ENV TWS_CONFIG_PATH=/root/Jts
@@ -27,7 +25,8 @@ RUN chmod a+x /opt/TWS/ibgateway-stable-standalone-linux-x64.sh
 # Install IBController
 RUN mkdir -p /opt/IBController/ && mkdir -p /opt/IBController/Logs
 WORKDIR /opt/IBController/
-COPY ./IBCLinux-3.12.0/  /opt/IBController/
+RUN wget https://github.com/IbcAlpha/IBC/releases/download/3.16.2/IBCLinux-3.16.2.zip
+RUN unzip -q IBCLinux-3.16.2.zip && rm IBCLinux-3.16.2.zip
 RUN chmod -R u+x *.sh && chmod -R u+x scripts/*.sh
 
 WORKDIR /
